@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CREATE_SURVEY_ROUTE, JOIN_SURVEY_ROUTE } from '../../constants/routes';
+import { CREATE_SURVEY_ROUTE, JOIN_SURVEY_ROUTE } from '../../constants/routes.const';
 
 @Component({
   selector: 'app-home-page',

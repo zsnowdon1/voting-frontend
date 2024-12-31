@@ -15,4 +15,8 @@ export class VotingService {
         return this.httpClient.get(`/surveys/${surveyId}`);
     }
 
+    saveSurvey(survey: Survey) {
+        
+    }
+
 }
