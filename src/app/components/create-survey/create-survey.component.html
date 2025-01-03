@@ -1,0 +1,36 @@
+<div class="create-survey-container">
+    <div class="title-group">
+        <label>Title: </label>
+        <input text-editable
+            placeholder="Title"
+            [(ngModel)]="survey.title"/>
+    </div>
+
+    <div class="question-group">
+        <h3>Question {{questionIndex + 1}}:</h3>
+        <input text-editable
+            placeholder="Enter your question"
+            [(ngModel)]="survey.questions[questionIndex].questionText"/>
+
+        <div class="choice-group">
+            <div *ngFor="let choice of survey.questions[questionIndex].choices; let i = index">
+                <label>{{i + 1}}</label>
+                <input
+                    placeholder="Enter choice"
+                    [(ngModel)]="choice.choiceText"/>
+                <button>Remove Choice</button>
+            </div>
+            
+            <button (click)="addChoice()">Add Choice</button>
+
+        </div>
+    </div>
+
+    <div class="nav-group">
+        <div class="choice-nav-group">
+            <button (click)="handlePrevQuestion()" class="prev-button"><--</button>
+            <button (click)="handleNextQuestion()" class="next-button">--></button>
+        </div>
+        <button (click)="handleSaveSurvey()">Save Survey</button>
+    </div>
+</div>
