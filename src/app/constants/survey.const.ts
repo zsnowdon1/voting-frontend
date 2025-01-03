@@ -12,7 +12,7 @@ export class Question {
 export class Survey {
     surveyId?: string;
     title: string;
-    host?: string;
+    hostUsername?: string;
     questions: Question[];
 
     constructor() {

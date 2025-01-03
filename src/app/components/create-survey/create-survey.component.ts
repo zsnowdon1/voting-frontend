@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Survey } from '../../constants/survey.const';
 import { NgFor } from '@angular/common';
+import { VotingService } from '../../services/voting.service';
 
 @Component({
   selector: 'app-create-survey',
@@ -12,14 +13,12 @@ import { NgFor } from '@angular/common';
 })
 export class CreateSurveyComponent implements OnInit {
 
-  title: string = 'test';
-
   questionIndex: number = 0;
 
   survey: Survey;
 
   // Route to login when not signed in, with return url of create survey
-  constructor(private router: Router) { }
+  constructor(private router: Router, private votingService: VotingService) { }
 
   ngOnInit(): void {
     this.survey = new Survey();
@@ -42,7 +41,15 @@ export class CreateSurveyComponent implements OnInit {
   }
 
   handleSaveSurvey() {
-    console.log(this.survey);
+    this.votingService.handleSaveSurvey(this.survey).subscribe({
+      next: (response: Survey) => {
+        this.survey = response;
+        console.log('Survey submitted successfully', response);
+      },
+      error: (err) => {
+        console.error('Error submitting survey');
+      },
+    });
   }
 
   addQuestion() {
