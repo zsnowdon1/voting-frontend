@@ -22,6 +22,7 @@ export class CreateSurveyComponent implements OnInit {
 
   ngOnInit(): void {
     this.survey = new Survey();
+    this.survey.hostUsername = 'zsnowdon';
     this.survey.questions.push({
       questionText: '', choices: [{choiceText: ''}]
     });

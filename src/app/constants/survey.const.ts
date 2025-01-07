@@ -25,3 +25,10 @@ export class Choice {
     choiceId?: number;
     choiceText: string;
 };
+
+
+export class SurveyDetailDTO {
+    surveyId: string;
+    title: string;
+    questionCount: number;
+};

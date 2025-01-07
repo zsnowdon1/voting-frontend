@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Survey } from "../constants/survey.const";
 import { HOST_URL, SURVEYS_ENDPOINT } from "../constants/routes.const";
@@ -21,6 +21,15 @@ export class VotingService {
 
     saveSurvey(survey: Survey): Observable<any> {
         return this.httpClient.post(HOST_URL + SURVEYS_ENDPOINT + `/${survey.surveyId}`, survey);
+    }
+
+    getSurveyDetailList(hostName: String): Observable<any> {
+        const httpParams = new HttpParams({ fromObject: { hostUsername: `${hostName}` } });
+        return this.httpClient.get(HOST_URL + SURVEYS_ENDPOINT, { params: httpParams });
+    }
+
+    deleteSurvey(surveyId: String): Observable<any> {
+        return this.httpClient.delete(HOST_URL + SURVEYS_ENDPOINT + `/${surveyId}`);
     }
 
     handleSaveSurvey(survey: Survey): Observable<Survey> {
