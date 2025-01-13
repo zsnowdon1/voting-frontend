@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { VotingService } from '../../services/voting.service';
 import { SurveyDetailDTO } from '../../constants/survey.const';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-survey-list',
-  imports: [NgFor],
+  imports: [NgFor, NgIf],
   templateUrl: './survey-list.component.html',
   styleUrl: './survey-list.component.scss'
 })
@@ -15,12 +15,24 @@ export class SurveyListComponent implements OnInit {
 
   constructor(private votingService: VotingService) {}
 
-  handleDeleteSurvey(surveyId: String): void {
+  handleDeleteSurvey(surveyId: string): void {
     this.votingService.deleteSurvey(surveyId).subscribe({
       next: (deletedSurvey) => {
         this.surveyDetails = this.surveyDetails.filter(survey => survey.surveyId !== surveyId && (survey.surveyId !== deletedSurvey.surveyId));
       },
       error: (e) => console.error('Error deleting survey')
+    });
+  }
+
+  handleSetSurveyLive(surveyId: string): void {
+    this.votingService.toggleSurveyStatus(surveyId, 'LIVE').subscribe({
+      next: (survey) => {
+        const newSurvey = this.surveyDetails.find((survey: SurveyDetailDTO) => survey.surveyId === surveyId);
+        if(newSurvey) {
+          newSurvey.status = survey.newStatus;
+        }
+      },
+      error: (e) => console.error('Error setting survey to live')
     });
   }
 

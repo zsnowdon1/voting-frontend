@@ -13,11 +13,13 @@ export class Survey {
     surveyId?: string;
     title: string;
     hostUsername?: string;
+    status: string;
     questions: Question[];
 
     constructor() {
         this.title = '';
         this.questions = [];
+        this.status = 'NOT-LIVE';
     }
 };
 
@@ -30,5 +32,6 @@ export class Choice {
 export class SurveyDetailDTO {
     surveyId: string;
     title: string;
+    status: string;
     questionCount: number;
 };

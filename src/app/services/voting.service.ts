@@ -20,16 +20,20 @@ export class VotingService {
     }
 
     saveSurvey(survey: Survey): Observable<any> {
-        return this.httpClient.post(HOST_URL + SURVEYS_ENDPOINT + `/${survey.surveyId}`, survey);
+        return this.httpClient.put(HOST_URL + SURVEYS_ENDPOINT + `/${survey.surveyId}`, survey);
     }
 
-    getSurveyDetailList(hostName: String): Observable<any> {
+    getSurveyDetailList(hostName: string): Observable<any> {
         const httpParams = new HttpParams({ fromObject: { hostUsername: `${hostName}` } });
         return this.httpClient.get(HOST_URL + SURVEYS_ENDPOINT, { params: httpParams });
     }
 
-    deleteSurvey(surveyId: String): Observable<any> {
+    deleteSurvey(surveyId: string): Observable<any> {
         return this.httpClient.delete(HOST_URL + SURVEYS_ENDPOINT + `/${surveyId}`);
+    }
+
+    toggleSurveyStatus(surveyId: string, status: string): Observable<any> {
+        return this.httpClient.put(HOST_URL + SURVEYS_ENDPOINT + `/${surveyId}/status`, null, { params: { status } });
     }
 
     handleSaveSurvey(survey: Survey): Observable<Survey> {

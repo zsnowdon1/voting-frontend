@@ -5,10 +5,14 @@
         <p><strong>Survey ID:</strong> {{ survey.surveyId }}</p>
         <p><strong>Questions:</strong> {{ survey.questionCount }}</p>
       </div>
-      <div class="survey-actions">
+      <div *ngIf="survey.status == 'NOT-LIVE'" class="survey-actions">
         <button class="btn delete-btn" (click)="handleDeleteSurvey(survey.surveyId)">Delete</button>
         <button class="btn edit-btn">Edit</button>
-        <button class="btn host-btn">Host</button>
+        <button class="btn host-btn" (click)="handleSetSurveyLive(survey.surveyId)">Host</button>
+      </div>
+      <div *ngIf="survey.status == 'LIVE'" class="survey-actions">
+        <button class="btn results-btn">View Results</button>
+        <button class="btn end-host-btn">End Survey</button>
       </div>
     </div>
   </div>
