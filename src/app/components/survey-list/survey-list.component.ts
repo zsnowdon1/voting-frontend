@@ -17,8 +17,8 @@ export class SurveyListComponent implements OnInit {
 
   handleDeleteSurvey(surveyId: String): void {
     this.votingService.deleteSurvey(surveyId).subscribe({
-      next: (v) => {
-        this.surveyDetails = this.surveyDetails.filter(survey => survey.surveyId !== surveyId);
+      next: (deletedSurvey) => {
+        this.surveyDetails = this.surveyDetails.filter(survey => survey.surveyId !== surveyId && (survey.surveyId !== deletedSurvey.surveyId));
       },
       error: (e) => console.error('Error deleting survey')
     });
