@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { VotingService } from '../../services/voting.service';
+import { HostVotingService } from '../../services/host-voting.service';
 
 @Component({
   selector: 'app-survey-view',
@@ -8,7 +8,7 @@ import { VotingService } from '../../services/voting.service';
 })
 export class SurveyViewComponent {
 
-  constructor(private votingService: VotingService) {}
+  constructor(private votingService: HostVotingService) {}
   
   ngOnInit() {
     console.log(this.votingService.fetchSurvey('1'));

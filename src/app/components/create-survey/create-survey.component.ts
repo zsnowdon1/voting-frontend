@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Survey } from '../../constants/survey.const';
 import { NgFor } from '@angular/common';
-import { VotingService } from '../../services/voting.service';
+import { HostVotingService } from '../../services/host-voting.service';
 
 @Component({
   selector: 'app-create-survey',
@@ -18,7 +18,7 @@ export class CreateSurveyComponent implements OnInit {
   survey: Survey;
 
   // Route to login when not signed in, with return url of create survey
-  constructor(private router: Router, private votingService: VotingService) { }
+  constructor(private router: Router, private votingService: HostVotingService) { }
 
   ngOnInit(): void {
     this.survey = new Survey();
