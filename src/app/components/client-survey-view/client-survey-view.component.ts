@@ -67,7 +67,14 @@ export class ClientSurveyViewComponent implements OnInit {
 
   submitSurvey() {
     this.submitSurveyRequest.responses = this.selectedChoices;
-    console.log(JSON.stringify(this.submitSurveyRequest));
+    this.votingService.submitSurvey(this.submitSurveyRequest).subscribe(
+      (next) => {
+        console.log('Submitted survey');
+      },
+      (error) => {
+        console.error('Error submitting survey:', error);
+      }
+    );
   }
 
   ngOnInit(): void {
@@ -77,6 +84,7 @@ export class ClientSurveyViewComponent implements OnInit {
         this.votingService.fetchSurvey(this.accessCode || '').subscribe({
           next: (survey: any) => {
             this.survey = survey;
+            this.submitSurveyRequest.surveyId = survey.surveyId;
           },
           error: (e: any) => {
             console.error(`Error fetching survey with access code: ${this.accessCode}`);
