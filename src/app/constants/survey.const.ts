@@ -1,5 +1,5 @@
 export class Question {
-    questionId?: number;
+    questionId?: string;
     questionText: string;
     choices: Choice[];
 
@@ -24,7 +24,7 @@ export class Survey {
 };
 
 export class Choice {
-    choiceId?: number;
+    choiceId?: string;
     choiceText: string;
 };
 
@@ -34,4 +34,26 @@ export class SurveyDetailDTO {
     title: string;
     status: string;
     questionCount: number;
+};
+
+export class SubmitSurveyRequest {
+    username: string;
+    surveyId: string;
+    responses: SelectedChoice[];
+
+    constructor() {
+        this.username = '';
+        this.surveyId = '';
+        this.responses = [];
+    }
+};
+
+export class SelectedChoice {
+    questionId: string;
+    choiceId: string;
+
+    constructor(questionId: string, choiceId: string) {
+        this.choiceId = choiceId;
+        this.questionId = questionId;
+    }
 };

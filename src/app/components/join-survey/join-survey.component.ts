@@ -16,6 +16,6 @@ export class JoinSurveyComponent {
   constructor(private router: Router) {}
 
   handleJoinSurvey() {
-    this.router.navigate([CLIENT_SURVEY_ROUTE, this.surveyCode]);
+    this.router.navigate([CLIENT_SURVEY_ROUTE], { queryParams: { accessCode: this.surveyCode } });
   }
 }

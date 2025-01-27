@@ -14,6 +14,6 @@ export const routes: Routes = [
     { path: JOIN_SURVEY_ROUTE, component: JoinSurveyComponent },
     { path: CREATE_SURVEY_ROUTE, component: CreateSurveyComponent },
     { path: SURVEY_LIST_ROUTE, component: SurveyListComponent },
-    { path: CLIENT_SURVEY_ROUTE + '/:id', component: ClientSurveyViewComponent },
+    { path: CLIENT_SURVEY_ROUTE, component: ClientSurveyViewComponent },
     { path: '**', redirectTo: HOME_ROUTE }
 ];
