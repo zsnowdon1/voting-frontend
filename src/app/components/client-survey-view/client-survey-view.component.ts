@@ -67,12 +67,13 @@ export class ClientSurveyViewComponent implements OnInit {
 
   submitSurvey() {
     this.submitSurveyRequest.responses = this.selectedChoices;
-    this.votingService.submitSurvey(this.submitSurveyRequest).subscribe(
-      (next) => {
-        console.log('Submitted survey');
-      },
-      (error) => {
-        console.error('Error submitting survey:', error);
+    this.votingService.submitSurvey(this.submitSurveyRequest).subscribe({
+        error: (error) => {
+          console.log('Error submitting survey:', error);
+        },
+        complete: () => {
+          console.log('Submitted survey');
+        }
       }
     );
   }
