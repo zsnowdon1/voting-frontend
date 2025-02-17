@@ -38,6 +38,7 @@ export class SurveyDetailDTO {
     title: string;
     status: string;
     questionCount: number;
+    accessCode?: string;
 
     constructor() {
         this.title = '';
@@ -67,3 +68,13 @@ export class SelectedChoice {
         this.questionId = questionId;
     }
 };
+
+export class ToggleStatusResponse {
+    newStatus: string;
+    accessCode: string;
+
+    constructor(newStatus: string, accessCode: string) {
+        this.newStatus = newStatus;
+        this.accessCode = accessCode;
+    }
+}

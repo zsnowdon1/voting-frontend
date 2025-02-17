@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HostVotingService } from '../../services/host-voting.service';
-import { SurveyDetailDTO } from '../../constants/survey.const';
+import { SurveyDetailDTO, ToggleStatusResponse } from '../../constants/survey.const';
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({
@@ -26,10 +26,11 @@ export class SurveyListComponent implements OnInit {
 
   handleToggleSurveyStatus(surveyId: string, status: string): void {
     this.votingService.toggleSurveyStatus(surveyId, status).subscribe({
-      next: (survey: any) => {
+      next: (toggleResponse: ToggleStatusResponse) => {
         const newSurvey = this.surveyDetails.find((survey: SurveyDetailDTO) => survey.surveyId === surveyId);
         if(newSurvey) {
-          newSurvey.status = survey.newStatus;
+          newSurvey.status = toggleResponse.newStatus;
+          newSurvey.accessCode = toggleResponse.accessCode;
         }
       },
       error: (e: any) => console.error('Error setting survey to live')
