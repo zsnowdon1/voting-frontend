@@ -8,10 +8,10 @@ export const CLIENT_SURVEY_ROUTE = 'client-survey';
 export const LIVE_RESULTS_ROUTE = 'live-results';
 
 // API host urls
-export const HOST_URL = 'http://host-service.dev.svc.cluster.local:8081/api/host/surveys';
-// export const HOST_URL = 'http://localhost:8081/surveys';
-export const CLIENT_URL = 'http://client-service.dev.svc.cluster.local:8082/api/client/surveys';
-// export const CLIENT_URL = 'http://localhost:8082/client/surveys';
+// export const HOST_URL = 'http://host-service.dev.svc.cluster.local:8081/api/host/surveys';
+export const HOST_URL = 'http://localhost/api/host/surveys';
+// export const CLIENT_URL = 'http://client-service.dev.svc.cluster.local:8082/api/client/surveys';
+export const CLIENT_URL = 'http://localhost/api/client/surveys';
 
 
 // API paths
