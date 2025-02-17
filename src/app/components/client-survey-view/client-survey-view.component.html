@@ -1,0 +1,31 @@
+<div *ngIf="survey">
+    <h2>{{ survey.title }}</h2>
+
+    <div *ngFor="let question of survey.questions; let i = index">
+        <h3>Question {{ i + 1 }}: {{ question.questionText }}</h3>
+
+        <div *ngIf="question.choices.length > 0">
+            <div *ngFor="let choice of question.choices">
+                <label>
+                <input
+                    type="radio"
+                    name="{{ question.questionId }}"
+                    [value]="choice.choiceId"
+                    [checked]="isChoiceSelected(question.questionId || '', choice.choiceId || '')"
+                    (change)="updateResponse(question.questionId || '', choice.choiceId || '')"
+                />
+                {{ choice.choiceText }}
+                </label>
+            </div>
+        </div>
+        <div *ngIf="!question.choices?.length">
+            <p>No choices available for this question.</p>
+        </div>
+    </div>
+
+    <button (click)="submitSurvey()" [disabled]="!isSurveyComplete()">Submit Survey</button>
+</div>
+
+<!-- <div *ngIf="!survey">
+    <p>Loading survey...</p>
+</div> -->
