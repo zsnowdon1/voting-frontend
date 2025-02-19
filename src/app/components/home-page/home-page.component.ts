@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CREATE_SURVEY_ROUTE, JOIN_SURVEY_ROUTE, SURVEY_LIST_ROUTE } from '../../constants/routes.const';
+import { CREATE_SURVEY_ROUTE, JOIN_SURVEY_ROUTE, LIVE_RESULTS_ROUTE, SURVEY_LIST_ROUTE } from '../../constants/routes.const';
 
 @Component({
   selector: 'app-home-page',
@@ -22,6 +22,10 @@ export class HomePageComponent {
 
   navToList(): void {
     this.router.navigate([SURVEY_LIST_ROUTE]);
+  }
+
+  navToResults(): void {
+    this.router.navigate([LIVE_RESULTS_ROUTE]);
   }
 
 }
