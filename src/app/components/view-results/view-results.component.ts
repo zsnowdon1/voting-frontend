@@ -25,11 +25,11 @@ export class ViewResultsComponent implements OnInit {
   }
 
   handleInitData(data: any): void {
-
+    console.log(data);
   }
 
   handleUpdateData(data: any): void {
-
+    console.log(data);
   }
 
 }
