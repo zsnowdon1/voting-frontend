@@ -5,7 +5,7 @@ export const CREATE_SURVEY_ROUTE = 'create-survey';
 export const JOIN_SURVEY_ROUTE = 'join-survey';
 export const SURVEY_LIST_ROUTE = 'survey-list';
 export const CLIENT_SURVEY_ROUTE = 'client-survey';
-export const LIVE_RESULTS_ROUTE = 'live-results';
+export const LIVE_RESULTS_ROUTE = 'live-results/:surveyId';
 
 // API host urls
 // export const HOST_URL = 'http://host-service.dev.svc.cluster.local:8081/api/host/surveys';

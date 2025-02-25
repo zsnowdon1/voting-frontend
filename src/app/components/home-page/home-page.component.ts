@@ -24,8 +24,4 @@ export class HomePageComponent {
     this.router.navigate([SURVEY_LIST_ROUTE]);
   }
 
-  navToResults(): void {
-    this.router.navigate([LIVE_RESULTS_ROUTE]);
-  }
-
 }

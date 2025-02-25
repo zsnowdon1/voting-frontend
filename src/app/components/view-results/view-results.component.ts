@@ -15,13 +15,13 @@ export class ViewResultsComponent implements OnInit {
   constructor(private route: ActivatedRoute, private surveyService: HostVotingService, private liveVoteService: LiveVoteService) {}
 
   ngOnInit(): void {
-    // this.surveyService.fetchSurvey('6799716ae17ddc2d3273ac67').subscribe(
-    //   (error): console.log('test');
-    // );
-    this.liveVoteService.connectToLiveResults('6799716ae17ddc2d3273ac67', 
-      (data) => this.handleInitData(data),
-      (data) => this.handleUpdateData(data)
-    );
+    const surveyId = this.route.snapshot.paramMap.get('surveyId');
+    if(surveyId !== null) {
+      this.liveVoteService.connectToLiveResults(surveyId, 
+        (data) => this.handleInitData(data),
+        (data) => this.handleUpdateData(data)
+      );
+    }
   }
 
   handleInitData(data: any): void {

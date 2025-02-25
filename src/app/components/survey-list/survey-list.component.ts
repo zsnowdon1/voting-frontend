@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HostVotingService } from '../../services/host-voting.service';
 import { SurveyDetailDTO, ToggleStatusResponse } from '../../constants/survey.const';
 import { NgFor, NgIf } from '@angular/common';
+import { Router } from '@angular/router';
+import { LIVE_RESULTS_ROUTE } from '../../constants/routes.const';
 
 @Component({
   selector: 'app-survey-list',
@@ -13,7 +15,7 @@ export class SurveyListComponent implements OnInit {
 
   surveyDetails: SurveyDetailDTO[] = [];
 
-  constructor(private votingService: HostVotingService) {}
+  constructor(private votingService: HostVotingService, private router: Router) {}
 
   handleDeleteSurvey(surveyId: string): void {
     this.votingService.deleteSurvey(surveyId).subscribe({
@@ -35,6 +37,10 @@ export class SurveyListComponent implements OnInit {
       },
       error: (e: any) => console.error('Error setting survey to live')
     });
+  }
+
+  navToLiveResults(surveyId: string): void {
+      this.router.navigate([LIVE_RESULTS_ROUTE, surveyId]);
   }
 
   ngOnInit(): void {
