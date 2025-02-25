@@ -78,3 +78,13 @@ export class ToggleStatusResponse {
         this.accessCode = accessCode;
     }
 }
+
+export class SurveyResultResponse {
+    questionId: string;
+    choices: Map<string, number>;
+
+    constructor(questionId: string, choices: string) {
+        this.questionId = '';
+        this.choices = new Map();
+    }
+}

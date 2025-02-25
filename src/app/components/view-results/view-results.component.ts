@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HostVotingService } from '../../services/host-voting.service';
 import { LiveVoteService } from '../../services/live-voting.service';
+import { Survey, SurveyResultResponse } from '../../constants/survey.const';
 // import { error } from 'console';
 
 @Component({
@@ -12,6 +13,8 @@ import { LiveVoteService } from '../../services/live-voting.service';
 })
 export class ViewResultsComponent implements OnInit {
   surveyId: string = '';
+  survey: Survey = new Survey();
+  surveyResults: SurveyResultResponse[] = [];
 
   constructor(private route: ActivatedRoute, private surveyService: HostVotingService, private liveVoteService: LiveVoteService) {}
 
@@ -25,14 +28,19 @@ export class ViewResultsComponent implements OnInit {
         (data) => this.handleInitData(data),
         (data) => this.handleUpdateData(data)
       );
+      this.surveyService.fetchSurvey(this.surveyId).subscribe({
+        error: (e: any) => console.error('Error fetching survey details', e),
+        next: (v: Survey) => this.survey = v,
+        complete: () => console.log(`fetched survey ${this.survey.surveyId}`)
+      });
     }
   }
 
-  handleInitData(data: any): void {
+  handleInitData(data: SurveyResultResponse[]): void {
     console.log(data);
   }
 
-  handleUpdateData(data: any): void {
+  handleUpdateData(data: SurveyResultResponse[]): void {
     console.log(data);
   }
 
