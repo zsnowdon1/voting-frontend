@@ -12,7 +12,7 @@
       </div>
       <div *ngIf="survey.status === 'LIVE'" class="survey-actions">
         <p>Access Code: {{ survey.accessCode }}</p>
-        <button class="btn results-btn" (click)="navToList(survey.surveyId || '')">View Results</button>
+        <button class="btn results-btn" (click)="navToLiveResults(survey.surveyId || '')">View Results</button>
         <button class="btn end-host-btn" (click)="handleToggleSurveyStatus(survey.surveyId || '', 'NOT-LIVE')">End Survey</button>
       </div>
     </div>
