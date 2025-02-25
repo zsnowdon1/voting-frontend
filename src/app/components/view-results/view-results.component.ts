@@ -11,13 +11,17 @@ import { LiveVoteService } from '../../services/live-voting.service';
   styleUrl: './view-results.component.scss'
 })
 export class ViewResultsComponent implements OnInit {
+  surveyId: string = '';
 
   constructor(private route: ActivatedRoute, private surveyService: HostVotingService, private liveVoteService: LiveVoteService) {}
 
   ngOnInit(): void {
-    const surveyId = this.route.snapshot.paramMap.get('surveyId');
-    if(surveyId !== null) {
-      this.liveVoteService.connectToLiveResults(surveyId, 
+    console.log('Working view results');
+    this.route.paramMap.subscribe(params => {
+      this.surveyId = params.get('surveyId') || '';
+    });
+    if(this.surveyId !== null) {
+      this.liveVoteService.connectToLiveResults(this.surveyId, 
         (data) => this.handleInitData(data),
         (data) => this.handleUpdateData(data)
       );
