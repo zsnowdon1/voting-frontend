@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { HostVotingService } from '../../services/host-voting.service';
 import { LiveVoteService } from '../../services/live-voting.service';
 import { Survey, SurveyResultResponse } from '../../constants/survey.const';
@@ -7,7 +8,7 @@ import { Survey, SurveyResultResponse } from '../../constants/survey.const';
 
 @Component({
   selector: 'app-view-results',
-  imports: [],
+  imports: [NgxChartsModule],
   templateUrl: './view-results.component.html',
   styleUrl: './view-results.component.scss'
 })
@@ -15,6 +16,15 @@ export class ViewResultsComponent implements OnInit {
   surveyId: string = '';
   survey: Survey = new Survey();
   surveyResults: SurveyResultResponse[] = [];
+
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showLegend = true;
+  showXAxisLabel = true;
+  xAxisLabel = 'Country';
+  showYAxisLabel = true;
+  yAxisLabel = 'Population';
 
   constructor(private route: ActivatedRoute, private surveyService: HostVotingService, private liveVoteService: LiveVoteService) {}
 
@@ -34,6 +44,10 @@ export class ViewResultsComponent implements OnInit {
         complete: () => console.log(`fetched survey ${this.survey.surveyId}`)
       });
     }
+  }
+
+  onSelect(event: any): void {
+
   }
 
   handleInitData(data: SurveyResultResponse[]): void {
