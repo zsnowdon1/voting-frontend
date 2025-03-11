@@ -80,11 +80,9 @@ export class ToggleStatusResponse {
 }
 
 export class SurveyResultResponse {
-    questionId: string;
-    choices: Map<string, number>;
+    resultMap: Map<string, Map<string, number>>;
 
-    constructor(questionId: string, choices: string) {
-        this.questionId = '';
-        this.choices = new Map();
+    constructor() {
+        this.resultMap = new Map();
     }
 }
