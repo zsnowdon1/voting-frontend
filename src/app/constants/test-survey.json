@@ -1,0 +1,45 @@
+{
+    "surveyId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "title": "Customer Feedback Survey",
+    "hostUsername": "admin_user",
+    "status": "LIVE",
+    "questions": [
+      {
+        "questionId": "550e8400-e29b-41d4-a716-446655440000",
+        "questionText": "How satisfied are you with our service?",
+        "choices": [
+          {
+            "choiceId": "123e4567-e89b-12d3-a456-426614174000",
+            "choiceText": "Very Satisfied"
+          },
+          {
+            "choiceId": "123e4567-e89b-12d3-a456-426614174001",
+            "choiceText": "Satisfied"
+          },
+          {
+            "choiceId": "123e4567-e89b-12d3-a456-426614174002",
+            "choiceText": "Neutral"
+          }
+        ]
+      },
+      {
+        "questionId": "6f9619ff-8b86-d011-b42d-00c04fc964ff",
+        "questionText": "Would you recommend us to others?",
+        "choices": [
+          {
+            "choiceId": "550e8400-e29b-41d4-a716-446655440001",
+            "choiceText": "Yes"
+          },
+          {
+            "choiceId": "550e8400-e29b-41d4-a716-446655440002",
+            "choiceText": "No"
+          },
+          {
+            "choiceId": "550e8400-e29b-41d4-a716-446655440003",
+            "choiceText": "Maybe"
+          }
+        ]
+      }
+    ]
+  }
+  

@@ -1,16 +1,16 @@
 <div *ngFor="let question of survey.questions">
     <h3>{{ question.questionId }}</h3>
     <ngx-charts-bar-vertical
-        [view]="[700, 400]"
-        [results]="surveyResults"
-        [gradient]="gradient"
-        [xAxis]="showXAxis"
-        [yAxis]="showYAxis"
-        [legend]="showLegend"
-        [showXAxisLabel]="showXAxisLabel"
-        [showYAxisLabel]="showYAxisLabel"
-        [xAxisLabel]="xAxisLabel"
-        [yAxisLabel]="yAxisLabel"
-        (select)="onSelect($event)">
+    [view]="[600, 400]"
+    [scheme]="'cool'"
+    [results]="getChartData(question.questionId || '')"
+    [gradient]="false"
+    [xAxis]="true"
+    [yAxis]="true"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Choices'"
+    [yAxisLabel]="'Votes'">
     </ngx-charts-bar-vertical>
 </div>

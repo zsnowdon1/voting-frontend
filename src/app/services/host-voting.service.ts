@@ -12,7 +12,7 @@ export class HostVotingService {
     constructor(private httpClient: HttpClient) {}
 
     fetchSurvey(surveyId: string): Observable<any> {
-        return this.httpClient.get(HOST_URL + `/surveys/${surveyId}`);
+        return this.httpClient.get(HOST_URL + `/${surveyId}`);
     }
 
     createSurvey(survey: Survey): Observable<any> {
