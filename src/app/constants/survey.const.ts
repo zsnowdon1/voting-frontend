@@ -86,3 +86,9 @@ export class SurveyResultResponse {
         this.resultMap = {};
     }
 }
+
+export interface VoteUpdate {
+    questionId: string;
+    choiceId: string;
+    votes: number;
+}

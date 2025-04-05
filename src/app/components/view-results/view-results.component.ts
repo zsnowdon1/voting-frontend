@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { HostVotingService } from '../../services/host-voting.service';
 import { LiveVoteService } from '../../services/live-voting.service';
-import { Choice, Question, Survey, SurveyResultResponse } from '../../constants/survey.const';
+import { Choice, Question, Survey, SurveyResultResponse, VoteUpdate } from '../../constants/survey.const';
 // import surveyData from '../../constants/test-survey.json';
 // import testResults from '../../constants/test-results.json';
 
@@ -44,8 +44,8 @@ export class ViewResultsComponent implements OnInit {
 
   private initializeLiveResults(): void {
     this.liveVoteService.connectToLiveResults(this.surveyId, 
-      (data) => this.handleInitData(data),
-      (data) => this.handleUpdateData(data)
+      (data: SurveyResultResponse) => this.handleInitData(data),
+      (data: VoteUpdate) => this.handleUpdateData(data)
     );
   }
 
@@ -73,12 +73,16 @@ export class ViewResultsComponent implements OnInit {
     }
   }
 
-  private handleUpdateData(data: SurveyResultResponse): void {
-    // const value: Map<String, number> = data.resultMap.entries().next().value;
-    // if(this.surveyResults.has(value.))
-    // console.log(data);
-    this.cdRef.detectChanges();
-  }
+  private handleUpdateData(data: VoteUpdate): void {
+    if (data.questionId && data.choiceId && data.votes != null) {
+        const questionResults = this.surveyResults[data.questionId] || {};
+        questionResults[data.choiceId] = data.votes;
+        this.surveyResults[data.questionId] = questionResults;
+        this.cdRef.detectChanges();
+    } else {
+        console.error('Invalid update data received:', data);
+    }
+}
 
 
   getChartData(questionId: string): any[] {
