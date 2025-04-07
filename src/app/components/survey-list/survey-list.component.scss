@@ -1,70 +1,114 @@
-.survey-container {
+.survey-list-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 1.5rem;
+  }
+  
+  .home-button {
+    padding: 0.5rem 1rem;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+  
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+  
+  .survey-container {
     display: flex;
     flex-direction: column;
-    overflow-x: auto;
-    padding: 1rem;
-    gap: 1rem;
-    scroll-snap-type: x mandatory;
-}
-
-.survey-card {
-    flex: 0 0 auto;
-    width: 100%;
-    max-width: 300px;
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    scroll-snap-align: start;
+    gap: 1.5rem;
+  }
+  
+  .survey-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.survey-info {
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .survey-info {
     flex-grow: 1;
-}
-
-.survey-actions {
+  
+    h3 {
+      margin: 0 0 0.5rem 0;
+      color: #333;
+    }
+  
+    p {
+      margin: 0.25rem 0;
+      font-size: 0.9rem;
+      color: #555;
+  
+      strong {
+        color: #333;
+      }
+    }
+  }
+  
+  .survey-actions {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-}
-
-.btn {
+    align-items: flex-end;
+  
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #007bff;
+    }
+  }
+  
+  .btn {
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 0.875rem;
-}
-
-.delete-btn {
-    background-color: #ff4d4d;
+    font-size: 0.9rem;
     color: white;
-}
-
-.edit-btn {
+    transition: background-color 0.2s;
+  
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+  
+  .delete-btn {
+    background-color: #ff4d4d;
+  }
+  
+  .edit-btn {
     background-color: #4caf50;
-    color: white;
-}
-
-.host-btn {
+  }
+  
+  .host-btn {
     background-color: #007bff;
-    color: white;
-}
-
-.results-btn {
+  }
+  
+  .results-btn {
     background-color: #007bff;
-    color: white;
-}
-
-.end-host-btn {
+  }
+  
+  .end-host-btn {
     background-color: #ff4d4d;
-    color: white;
-}
-
-.btn:hover {
-    opacity: 0.9;
-}
+  }

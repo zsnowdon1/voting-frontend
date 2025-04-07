@@ -1,19 +1,33 @@
-<div class="survey-container">
+<div class="survey-list-container">
+  <!-- Home Button -->
+  <div class="header">
+    <button class="home-button" (click)="navigateToHome()">Home</button>
+  </div>
+
+  <!-- Survey List -->
+  <h2>Your Surveys</h2>
+  <div class="survey-container">
     <div *ngFor="let survey of surveyDetails" class="survey-card">
       <div class="survey-info">
         <h3>{{ survey.title }}</h3>
-        <p><strong>Survey ID:</strong> {{ survey.surveyId }}</p>
+        <p><strong>ID:</strong> {{ survey.surveyId || 'N/A' }}</p>
         <p><strong>Questions:</strong> {{ survey.questionCount }}</p>
+        <p><strong>Status:</strong> {{ survey.status }}</p>
       </div>
-      <div *ngIf="survey.status === 'NOT-LIVE'" class="survey-actions">
-        <button class="btn delete-btn" (click)="handleDeleteSurvey(survey.surveyId || '')">Delete</button>
-        <button class="btn edit-btn">Edit</button>
-        <button class="btn host-btn" (click)="handleToggleSurveyStatus(survey.surveyId || '', 'LIVE')">Host</button>
-      </div>
-      <div *ngIf="survey.status === 'LIVE'" class="survey-actions">
-        <p>Access Code: {{ survey.accessCode }}</p>
-        <button class="btn results-btn" (click)="navToLiveResults(survey.surveyId || '')">View Results</button>
-        <button class="btn end-host-btn" (click)="handleToggleSurveyStatus(survey.surveyId || '', 'NOT-LIVE')">End Survey</button>
+      <div class="survey-actions">
+        <!-- Actions for NOT-LIVE surveys -->
+        <ng-container *ngIf="survey.status === 'NOT-LIVE'">
+          <button class="btn edit-btn" (click)="navigateToEdit(survey.surveyId)">Edit</button>
+          <button class="btn host-btn" (click)="handleToggleSurveyStatus(survey.surveyId, 'LIVE')">Host</button>
+          <button class="btn delete-btn" (click)="handleDeleteSurvey(survey.surveyId)">Delete</button>
+        </ng-container>
+        <!-- Actions for LIVE surveys -->
+        <ng-container *ngIf="survey.status === 'LIVE'">
+          <p>Access Code: {{ survey.accessCode || 'N/A' }}</p>
+          <button class="btn results-btn" (click)="navToLiveResults(survey.surveyId)">View Results</button>
+          <button class="btn end-host-btn" (click)="handleToggleSurveyStatus(survey.surveyId, 'NOT-LIVE')">End Survey</button>
+        </ng-container>
       </div>
     </div>
   </div>
+</div>

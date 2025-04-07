@@ -1,16 +1,20 @@
-<div *ngFor="let question of survey.questions">
-    <h3>{{ question.questionId }}</h3>
+<div class="header">
+    <button class="home-button" (click)="navigateToHome()">Home</button>
+</div>
+<h2>{{ survey.title }}</h2>
+<div *ngFor="let question of survey.questions" class="question-container">
+    <h3>{{ question.questionText }}</h3>
     <ngx-charts-bar-vertical
-    [view]="[600, 400]"
-    [scheme]="'cool'"
-    [results]="getChartData(question.questionId || '')"
-    [gradient]="false"
-    [xAxis]="true"
-    [yAxis]="true"
-    [legend]="true"
-    [showXAxisLabel]="true"
-    [showYAxisLabel]="true"
-    [xAxisLabel]="'Choices'"
-    [yAxisLabel]="'Votes'">
+        [view]="[600, 400]"
+        [scheme]="'cool'"
+        [results]="getChartData(question)"
+        [gradient]="false"
+        [xAxis]="true"
+        [yAxis]="true"
+        [legend]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="'Choices'"
+        [yAxisLabel]="'Votes'">
     </ngx-charts-bar-vertical>
 </div>

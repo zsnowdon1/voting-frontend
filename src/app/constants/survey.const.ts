@@ -1,22 +1,24 @@
 export class Question {
-    questionId?: string;
+    questionId: string;
     questionText: string;
     choices: Choice[];
 
     constructor() {
+        this.questionId = '';
         this.questionText = '';
         this.choices = [];
     }
 };
 
 export class Survey {
-    surveyId?: string;
+    surveyId: string;
     title: string;
     hostUsername?: string;
     status: string;
     questions: Question[];
 
     constructor() {
+        this.surveyId = '';
         this.title = '';
         this.questions = [];
         this.status = 'NOT-LIVE';
@@ -24,23 +26,25 @@ export class Survey {
 };
 
 export class Choice {
-    choiceId?: string;
+    choiceId: string;
     choiceText: string;
 
     constructor() {
+        this.choiceId = '';
         this.choiceText = '';
     }
 };
 
 
 export class SurveyDetailDTO {
-    surveyId?: string;
+    surveyId: string;
     title: string;
     status: string;
     questionCount: number;
     accessCode?: string;
 
     constructor() {
+        this.surveyId = '';
         this.title = '';
         this.status = '';
         this.questionCount = 0;

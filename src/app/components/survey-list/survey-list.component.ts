@@ -17,10 +17,18 @@ export class SurveyListComponent implements OnInit {
 
   constructor(private votingService: HostVotingService, private router: Router) {}
 
+  ngOnInit(): void {
+    this.votingService.getSurveyDetailList('zsnowdon').subscribe({
+      error: (e: any) => console.error('Error fetching survey details', e),
+      next: (v: SurveyDetailDTO[]) => this.surveyDetails = v,
+      complete: () => console.log(`fetched ${this.surveyDetails.length} surveys`)
+    });
+  }
+
   handleDeleteSurvey(surveyId: string): void {
     this.votingService.deleteSurvey(surveyId).subscribe({
       next: (deletedSurvey: any) => {
-        this.surveyDetails = this.surveyDetails.filter(survey => survey.surveyId !== surveyId && (survey.surveyId !== deletedSurvey.surveyId));
+        this.surveyDetails = this.surveyDetails.filter(survey => survey.surveyId !== surveyId);
       },
       error: (e: any) => console.error('Error deleting survey')
     });
@@ -43,12 +51,12 @@ export class SurveyListComponent implements OnInit {
       this.router.navigate([LIVE_RESULTS_ROUTE, surveyId]);
   }
 
-  ngOnInit(): void {
-    this.votingService.getSurveyDetailList('zsnowdon').subscribe({
-      error: (e: any) => console.error('Error fetching survey details', e),
-      next: (v: SurveyDetailDTO[]) => this.surveyDetails = v,
-      complete: () => console.log(`fetched ${this.surveyDetails.length} surveys`)
-    });
+  navigateToEdit(surveyId: string): void {
+    this.router.navigate(['/edit-survey', surveyId]);
+  }
+
+  navigateToHome(): void {
+    this.router.navigate(['/home']);
   }
 
 }

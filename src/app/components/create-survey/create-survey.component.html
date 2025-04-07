@@ -1,36 +1,62 @@
 <div class="create-survey-container">
-    <div class="title-group">
-        <label>Title: </label>
-        <input text-editable
-            placeholder="Title"
-            [(ngModel)]="survey.title"/>
+    <!-- Home Button -->
+    <div class="header">
+        <button class="home-button" (click)="navigateToHome()">Home</button>
     </div>
 
+    <!-- Title Section -->
+    <div class="title-group">
+        <label>Title:</label>
+        <input
+            class="title-input"
+            placeholder="Enter survey title"
+            [(ngModel)]="survey.title" />
+    </div>
+
+    <!-- Question Section -->
     <div class="question-group">
-        <h3>Question {{questionIndex + 1}}:</h3>
-        <input text-editable
+        <h3>Question {{ questionIndex + 1 }}:</h3>
+        <input
+            class="question-input"
             placeholder="Enter your question"
-            [(ngModel)]="survey.questions[questionIndex].questionText"/>
+            [(ngModel)]="survey.questions[questionIndex].questionText" />
 
+        <!-- Choices -->
         <div class="choice-group">
-            <div *ngFor="let choice of survey.questions[questionIndex].choices; let i = index">
-                <label>{{i + 1}}</label>
+            <div
+                *ngFor="let choice of survey.questions[questionIndex].choices; let i = index"
+                class="choice-item">
+                <label>{{ i + 1 }}.</label>
                 <input
+                    class="choice-input"
                     placeholder="Enter choice"
-                    [(ngModel)]="choice.choiceText"/>
-                <button>Remove Choice</button>
+                    [(ngModel)]="choice.choiceText" />
+                <button
+                    class="remove-button"
+                    (click)="removeChoice(i)"
+                    *ngIf="survey.questions[questionIndex].choices.length > 1">
+                    Remove
+                </button>
             </div>
-            
-            <button (click)="addChoice()">Add Choice</button>
-
+            <button class="add-button" (click)="addChoice()">Add Choice</button>
         </div>
     </div>
 
+    <!-- Navigation and Save -->
     <div class="nav-group">
         <div class="choice-nav-group">
-            <button (click)="handlePrevQuestion()" class="prev-button"><--</button>
-            <button (click)="handleNextQuestion()" class="next-button">--></button>
+            <button
+                class="nav-button prev-button"
+                (click)="handlePrevQuestion()"
+                [disabled]="questionIndex === 0">
+                Previous
+            </button>
+            <button
+                class="nav-button next-button"
+                (click)="handleNextQuestion()">
+                Next
+            </button>
         </div>
-        <button (click)="handleSaveSurvey()">Save Survey</button>
+        <button class="save-button" (click)="handleSaveSurvey()">Save Survey</button>
     </div>
 </div>
