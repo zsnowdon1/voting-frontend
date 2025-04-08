@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { HostVotingService } from '../../services/host-voting.service';
 import { LiveVoteService } from '../../services/live-voting.service';
@@ -25,11 +25,13 @@ export class ViewResultsComponent implements OnInit {
   gradient = false;
   showLegend = true;
   showXAxisLabel = true;
-  xAxisLabel = 'Choice';
+  xAxisLabel = 'Choices';
   showYAxisLabel = true;
   yAxisLabel = 'Votes';
 
-  constructor(private route: ActivatedRoute, private surveyService: HostVotingService, private liveVoteService: LiveVoteService, private cdRef: ChangeDetectorRef) {}
+  constructor(private route: ActivatedRoute, private surveyService: HostVotingService, private liveVoteService: LiveVoteService, 
+    private cdRef: ChangeDetectorRef, private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -60,10 +62,6 @@ export class ViewResultsComponent implements OnInit {
     });
   }
 
-  private onSelect(event: any): void {
-
-  }
-
   private handleInitData(data: SurveyResultResponse): void {
     if (data.resultMap && typeof data.resultMap === 'object') {
       this.surveyResults = data.resultMap;
@@ -85,16 +83,21 @@ export class ViewResultsComponent implements OnInit {
 }
 
 
-  getChartData(questionId: string): any[] {
-    if (questionId && this.surveyResults) {
-      const choiceObj = this.surveyResults[questionId];
-      if (!choiceObj) return [];
-      return Object.entries(choiceObj).map(([choiceId, voteCount]) => ({
-        name: choiceId,
-        value: voteCount
-      }));
+  getChartData(question: Question): any[] {
+    if (!question.questionId) {
+      console.error('Question ID is undefined');
+      return [];
     }
-    return [];
+    const choiceObj = this.surveyResults[question.questionId];
+    if (!choiceObj) return [];
+    return question.choices.map(choice => ({
+      name: choice.choiceText,
+      value: choiceObj[choice.choiceId] || 0
+    }));
+  }
+
+  navigateToHome(): void {
+    this.router.navigate(['/home']);
   }
 
 }
