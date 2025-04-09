@@ -37,7 +37,7 @@ export class HostVotingService {
     }
 
     handleSaveSurvey(survey: Survey): Observable<Survey> {
-        if(survey.surveyId == undefined) {
+        if(survey.surveyId == '') {
             return this.createSurvey(survey);
         } else {
             return this.saveSurvey(survey);

@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Survey, Choice, Question } from '../../constants/survey.const';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { HostVotingService } from '../../services/host-voting.service';
 
 @Component({
   selector: 'app-edit-survey',
-  imports: [FormsModule, NgFor],
+  imports: [FormsModule, NgFor, NgIf],
   templateUrl: './edit-survey.component.html',
   styleUrl: './edit-survey.component.scss',
   standalone: true
