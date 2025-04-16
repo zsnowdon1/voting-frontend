@@ -36,9 +36,11 @@ export class ClientSurveyViewComponent implements OnInit {
     });
   }
 
-  isChoiceSelected(questionId: string, choiceId: string): boolean {
+  isChoiceSelected(questionId: any, choiceId: any): boolean {
+    const qId = String(questionId);
+    const cId = String(choiceId);
     return this.selectedChoices.some(
-      (response: SelectedChoice) => response.questionId === questionId && response.choiceId === choiceId
+      (response: SelectedChoice) => String(response.questionId) === qId && String(response.choiceId) === cId
     );
   }
 
@@ -54,15 +56,13 @@ export class ClientSurveyViewComponent implements OnInit {
     }
 
     this.submitSurveyRequest.responses = [...this.selectedChoices];
+    console.log('Updated selectedChoices:', this.selectedChoices);
   }
   
   isSurveyComplete(): boolean {
     if (!this.survey || !this.survey.questions.length) return false;
-    return (
-      this.survey.questions.length === this.selectedChoices.length &&
-      this.survey.questions.every(q =>
-        this.selectedChoices.some(response => response.questionId === q.questionId)
-      )
+    return this.survey.questions.every(q =>
+      this.selectedChoices.some(response => String(response.questionId) === String(q.questionId))
     );
   }
 
