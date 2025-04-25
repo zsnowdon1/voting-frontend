@@ -94,5 +94,5 @@ export class SurveyResultResponse {
 export interface VoteUpdate {
     questionId: string;
     choiceId: string;
-    votes: number;
+    total: number;
 }

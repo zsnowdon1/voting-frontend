@@ -4,8 +4,11 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { HostVotingService } from '../../services/host-voting.service';
 import { LiveVoteService } from '../../services/live-voting.service';
 import { Choice, Question, Survey, SurveyResultResponse, VoteUpdate } from '../../constants/survey.const';
-// import surveyData from '../../constants/test-survey.json';
-// import testResults from '../../constants/test-results.json';
+
+interface SurveyResult {
+  questionId: string;
+  choices: Map<string, number>;
+}
 
 @Component({
   selector: 'app-view-results',
@@ -17,20 +20,15 @@ import { Choice, Question, Survey, SurveyResultResponse, VoteUpdate } from '../.
 export class ViewResultsComponent implements OnInit {
   surveyId: string = '';
   survey: Survey = new Survey();
-  surveyResults: { [questionId: string]: { [choiceId: string]: number } } = {};
-  chartData: { questionId: string; data: any[] }[] = [];
+  surveyResults: Map<string, SurveyResult> = new Map();
+  chartDimensions: [number, number] = [600, 400];
 
-  showXAxis = true;
-  showYAxis = true;
-  gradient = false;
-  showLegend = true;
-  showXAxisLabel = true;
-  xAxisLabel = 'Choices';
-  showYAxisLabel = true;
-  yAxisLabel = 'Votes';
-
-  constructor(private route: ActivatedRoute, private surveyService: HostVotingService, private liveVoteService: LiveVoteService, 
-    private cdRef: ChangeDetectorRef, private router: Router
+  constructor(
+    private route: ActivatedRoute,
+    private surveyService: HostVotingService,
+    private liveVoteService: LiveVoteService,
+    private cdRef: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -42,10 +40,14 @@ export class ViewResultsComponent implements OnInit {
         this.fetchSurvey();
       }
     });
+
+    this.updateChartDimensions();
+    window.addEventListener('resize', () => this.updateChartDimensions());
   }
 
   private initializeLiveResults(): void {
-    this.liveVoteService.connectToLiveResults(this.surveyId, 
+    this.liveVoteService.connectToLiveResults(
+      this.surveyId,
       (data: SurveyResultResponse) => this.handleInitData(data),
       (data: VoteUpdate) => this.handleUpdateData(data)
     );
@@ -53,18 +55,29 @@ export class ViewResultsComponent implements OnInit {
 
   private fetchSurvey(): void {
     this.surveyService.fetchSurvey(this.surveyId).subscribe({
-      error: (e: any) => console.error('Error fetching survey details', e),
-      next: (v: Survey) => {
-        this.survey = v;
+      next: (survey: Survey) => {
+        this.survey = survey;
         this.cdRef.detectChanges();
       },
-      complete: () => console.log(`fetched survey ${this.survey.surveyId}`)
+      error: (error: any) => console.error('Error fetching survey details', error),
+      complete: () => console.log(`Fetched survey ${this.survey.surveyId}`)
     });
   }
 
   private handleInitData(data: SurveyResultResponse): void {
+    console.log('Raw initial data received:', JSON.stringify(data, null, 2));
     if (data.resultMap && typeof data.resultMap === 'object') {
-      this.surveyResults = data.resultMap;
+      this.surveyResults.clear();
+      Object.entries(data.resultMap).forEach(([questionId, choices]) => {
+        const choiceMap = new Map<string, number>(
+          Object.entries(choices).map(([choiceId, count]) => [
+            choiceId.replace(/^"|"$/g, ''), // Remove leading/trailing quotes
+            count
+          ])
+        );
+        this.surveyResults.set(questionId, { questionId, choices: choiceMap });
+      });
+      console.log('Processed surveyResults:', this.surveyResults);
       this.cdRef.detectChanges();
     } else {
       console.error('Invalid resultMap data received:', data.resultMap);
@@ -72,27 +85,29 @@ export class ViewResultsComponent implements OnInit {
   }
 
   private handleUpdateData(data: VoteUpdate): void {
-    if (data.questionId && data.choiceId && data.votes != null) {
-        const questionResults = this.surveyResults[data.questionId] || {};
-        questionResults[data.choiceId] = data.votes;
-        this.surveyResults[data.questionId] = questionResults;
-        this.cdRef.detectChanges();
+    if (data.questionId && data.choiceId && data.total != null) {
+      const result = this.surveyResults.get(data.questionId) || {
+        questionId: data.questionId,
+        choices: new Map<string, number>()
+      };
+      result.choices.set(data.choiceId, data.total);
+      this.surveyResults.set(data.questionId, result);
+      this.cdRef.detectChanges();
     } else {
-        console.error('Invalid update data received:', data);
+      console.error('Invalid update data received:', data);
     }
-}
-
+  }
 
   getChartData(question: Question): any[] {
     if (!question.questionId) {
       console.error('Question ID is undefined');
       return [];
     }
-    const choiceObj = this.surveyResults[question.questionId];
-    if (!choiceObj) return [];
+    const result = this.surveyResults.get(question.questionId);
+    if (!result) return [];
     return question.choices.map(choice => ({
       name: choice.choiceText,
-      value: choiceObj[choice.choiceId] || 0
+      value: result.choices.get(choice.choiceId) || 0
     }));
   }
 
@@ -100,4 +115,10 @@ export class ViewResultsComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  private updateChartDimensions(): void {
+    const width = Math.min(window.innerWidth - 40, 800); // Adjust for padding and max width
+    const height = Math.max(300, width * 0.66); // Maintain aspect ratio
+    this.chartDimensions = [width, height];
+    this.cdRef.detectChanges();
+  }
 }

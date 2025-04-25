@@ -1,11 +1,14 @@
-<div class="header">
-    <button class="home-button" (click)="navigateToHome()">Home</button>
-</div>
-<h2>{{ survey.title }}</h2>
-<div *ngFor="let question of survey.questions" class="question-container">
-    <h3>{{ question.questionText }}</h3>
-    <ngx-charts-bar-vertical
-        [view]="[600, 400]"
+<section class="results-container">
+    <header class="header">
+      <button class="home-button" (click)="navigateToHome()" aria-label="Return to home page">
+        <span class="material-icons">home</span> Home
+      </button>
+    </header>
+    <h1 class="survey-title">{{ survey.title }}</h1>
+    <article *ngFor="let question of survey.questions; let i = index" class="question-container">
+      <h2 class="question-text">{{ question.questionText }}</h2>
+      <ngx-charts-bar-vertical
+        [view]="chartDimensions"
         [scheme]="'cool'"
         [results]="getChartData(question)"
         [gradient]="false"
@@ -15,6 +18,8 @@
         [showXAxisLabel]="true"
         [showYAxisLabel]="true"
         [xAxisLabel]="'Choices'"
-        [yAxisLabel]="'Votes'">
-    </ngx-charts-bar-vertical>
-</div>
+        [yAxisLabel]="'Votes'"
+        [attr.aria-label]="'Bar chart for question ' + (i + 1) + ': ' + question.questionText">
+      </ngx-charts-bar-vertical>
+    </article>
+  </section>
